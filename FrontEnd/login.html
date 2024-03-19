@@ -16,21 +16,22 @@
 		<ul id="ul">
 			<li>projects</li>
 			<li>contact</li>
+			<a href="login.html"><li id="login-btn">login</li></a>
+			<li id="logout-btn" class="logout-btn" onclick="clearStorage()">logout</li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
 </header>
-<main>
+<body onload="isUserLoggedIn()">
 	<div class="login">
 		<h2 class="title">Log in</h2>
 		<form class="login-form" method="post" onsubmit="sendDataToAPI(event)">
 			<span>E-mail</span><input id="emailInput" class="inputs" type="email" name="email" required>
 			<span>Mot de passe</span><input id="passwordInput" class="inputs" type="password" name="password" required>
 			<button class="log-btn" type="submit" value="Se connecter">Se connecter</button>
-			<p class="pass-reset" onclick="LogInOut()">Mot de passe oublié</p>
+			<p class="pass-reset">Mot de passe oublié</p>
 		</form>
 	</div>
-</main>
 <footer>
 	<nav>
 		<ul>

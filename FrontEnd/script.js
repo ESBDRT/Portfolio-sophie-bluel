@@ -71,29 +71,78 @@ function sendDataToAPI(event) {
         console.log(data);
         var token = data.token;
         localStorage.setItem('token', token);
+        isUserLoggedIn()
     })
 }
 
+// Fonction pour clear le local Storage
 function clearStorage() {
-    localStorage.removeItem('token'); // Si un token est trouvé, clear le localStorage
+    localStorage.removeItem('token'); 
+    isUserLoggedIn()
+    window.location.href ="login.html"
 };
 
-function updateLoginStatus() {
-    var token = localStorage.getItem('token'); // Retrieve the token from localStorage
-    var ulElement = document.getElementById("ul");
+// Fonction pour modifier l'affichage quand l'utilisateur est login
+function loggedInDisplay() {
+    const token = localStorage.getItem('token');
+    const filters = document.getElementById("filters");
+    const editBanner = document.getElementById("edit-banner");
+    const divEdit = document.getElementById("div-edit");
+    const overlay = document.getElementById("overlay");
+    const popup = document.getElementById("popup");
 
-    if (token) {
-        // User is logged in
-        var logoutButton = document.createElement("a");
-        logoutButton.href = "";
-        logoutButton.textContent = "logout";
-        logoutButton.onclick = function() { clearStorage(); };
-        ulElement.appendChild(logoutButton);
-    } else {
-        // User is not logged in
-        var loginButton = document.createElement("li");
-        loginButton.href = "#";
-        loginButton.textContent = "login";
-        ulElement.appendChild(loginButton);
+    if (token !== null) {
+        filters.style.display = "none";
+        editBanner.style.display ="flex";
+        divEdit.style.display ="flex"; 
+        overlay.style.display ="block"
     }
+}
+
+// Fonction pour check si un token est présent est affiché les boutons login / logout
+function isUserLoggedIn() {
+    const token = localStorage.getItem('token');
+    const loginButton = document.getElementById("login-btn");
+    const logoutButton = document.getElementById("logout-btn");
+
+    if (token !== null) {
+        loginButton.style.display = "none";
+        logoutButton.style.display = "block"; 
+        loggedInDisplay()
+    } else {
+        logoutButton.style.display = "none";
+        loginButton.style.display = "block";    
+    }
+}
+
+// Request api works pour la popup
+function FetchPopup() {
+    fetch('http://localhost:5678/api/works').then(response => {
+    response.json().then(data => {
+        console.log(data)
+        let html = "";
+        data.forEach(elt => {
+            html += '<a><img src="' + elt.imageUrl + '" class="popup-images"><i class="fa-solid fa-trash-can delete-logo"></i></a>'
+        });
+        document.getElementById('popup-gallery').innerHTML = html;
+    });
+});}
+
+// Fonction pour ouvrir la popup
+function openPopup() {
+    const overlay = document.getElementById('overlay');
+    const popup = document.getElementById('popup')
+
+    overlay.style.visibility = "visible"
+    popup.style.display = "flex"
+    FetchPopup()
+}
+
+// Fonction pour fermer la popup
+function closePopup() {
+    const overlay = document.getElementById('overlay');
+    const popup = document.getElementById('popup')
+
+    overlay.style.visibility = "hidden"
+    popup.style.display = "none"
 }
