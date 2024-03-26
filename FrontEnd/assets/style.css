@@ -306,10 +306,8 @@ footer nav ul {
 
 .popup {
 	position: fixed;
-	display: none;
 	flex-direction: column;
-	flex-wrap: wrap;
-	align-content: center;
+	display: none;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
@@ -317,34 +315,50 @@ footer nav ul {
 	background-color: white;
 	color: black;
 	font-weight: bold;
-	height: 60%;
-	width: 25vw;
 	z-index: 1001;
+	padding: 20px;
+	width: 30%;
 }
 
 .popup-title {
 	margin-top: 40px;
 	font-size: 20px;
 	text-align: center;
-	padding-bottom: 60px;
+	
 }
 
 .popup-gallery {
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: center;
-	width: 100%;
-	gap: 10px;
+	gap: 5px;
+	padding-top: 30px;
+	justify-content: space-between;
 }
 
 .popup-images {	
-	height: 100px;
-	width: 75px;
+	height: 150x;
+	width: 100px;
+	object-fit: cover;
 }
 
 .delete-logo {
 	position: fixed;
-	transform: translateX(-15px) translateY(5px);
+	background-color: white;
+	transform: translateX(85px) translateY(5px);
+}
+
+.upload-div {
+	display: flex;
+	justify-content: center;
+	margin-top: 45px;
+	border-top: 2px solid #1d6154;
+	border-width: thin;
+}
+
+.upload-btn {
+	margin-top: 15px;
+	background-color: #1d6154;
+	color: white;
 }
 
 .close-popup {

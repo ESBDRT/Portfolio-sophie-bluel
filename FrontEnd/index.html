@@ -17,10 +17,12 @@
 		<h3 class="popup-title"> Galerie Photo <i class="fa-solid fa-xmark close-popup" onclick="closePopup()"></i></h3>
 	</div>
 	<div class="popup-gallery" id="popup-gallery">
-		gfdgfdgd
+	</div>
+	<div class="upload-div">
+		<button class="btn upload-btn" id="upload-btn">Ajouter une photo</button>
 	</div>
 </div>
-<div class="edit-banner" id="edit-banner" onclick="openPopup()">
+<div class="edit-banner" id="edit-banner">
 	<i class="far fa-edit logo"></i>Mode édition
 </div>
 <header>
@@ -30,12 +32,12 @@
 			<li>projects</li>
 			<li>contact</li>
 			<a href="login.html" class="login-btn"><li id="login-btn">login</li></a>
-			<li id="logout-btn" class="logout-btn" onclick="clearStorage()">logout</li>
+			<li id="logout-btn" class="logout-btn">logout</li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
 </header>
-<body onload="isUserLoggedIn()">
+<body>
 	<section id="introduction">
 		<figure>
 			<img src="./assets/images/sophie-bluel.png" alt="">
@@ -49,7 +51,7 @@
 	</section>
 	<section id="portfolio">
 		<h2>Mes Projets</h2>
-		<div class="div-edit" id="div-edit" onclick="openPopup()">
+		<div class="div-edit" id="div-edit">
 			<i class="far fa-edit logo"></i>modifier
 		</div>
 		<div class="filters" id="filters">
