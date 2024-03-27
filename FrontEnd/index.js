@@ -12,40 +12,6 @@ async function FetchWorks() {
     })
 }
 
-// Requéte API login
-function sendDataToAPI(event) {
-    event.preventDefault(); // Prevent form submission
-
-    
-    var email = document.getElementById("emailInput").value;
-    var password = document.getElementById("passwordInput").value;
-
-    var formData = {
-        email: email,
-        password: password
-    };
-
-    fetch('http://localhost:5678/api/users/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-    })
-    .then(response => {
-        if (response.ok) {
-            return response.json();
-        }
-        else 
-            throw new Error('Erreur dans l’identifiant ou le mot de passe');
-    })
-    .then(data => {
-        console.log(data);
-        var token = data.token;
-        localStorage.setItem('token', token);
-    })
-}
-
 // Filtrage 
 function filtering(categoryId) {
     const figures = document.querySelectorAll('#gallery figure');
@@ -58,7 +24,7 @@ function filtering(categoryId) {
     });
 }
 
-// Créations boutons
+// Créations boutons filtres
 async function renderFilters() {
     const filters = await FetchCategories();
     let html = '<button class="btn" data-id="0">Tous</button>';
@@ -148,6 +114,7 @@ async function openPopup() {
             html += '<figure data-id="' + elt.id + '"><span><i class="fa-solid fa-trash-can delete-logo" data-id="'+ elt.id +'" ></i><img src="'+elt.imageUrl+'" class="popup-images"></span></figure>';
         });
             document.getElementById('popup-gallery').innerHTML = html;
+
             const deleteBtns = document.querySelectorAll('.fa-trash-can');           
             deleteBtns.forEach(trash => {
                 trash.addEventListener('click', (e) => {
@@ -164,6 +131,9 @@ async function openPopup() {
 document.getElementById('edit-banner').addEventListener("click", openPopup)
 document.getElementById('div-edit').addEventListener("click", openPopup)
 
+
+
+
 // Fermer popup
 function closePopup() {
     const overlay = document.getElementById('overlay');
@@ -173,6 +143,32 @@ function closePopup() {
     popup.style.display = "none"
 }
 
+function openFileUploadPopup() {
+    const popup = document.getElementById('popup')
+    const formHTML = `
+      <form id="myForm" class="upload-popup">
+      <h3 class="popup-title upload-title"> Ajout Photo </h3>
+        <div>
+          <input type="file" id="file class="btn" />
+        </div>
+        <div>
+            <p class="upload-title">Titre</p>
+          <input type="text" id="title" class="text-inputs"/>
+        </div>
+        <div>
+            <p class="upload-title" >Catégorie</p>
+          <input type="text" id="category" class="text-inputs" />
+        </div>
+        <div class="upload-div">
+          <button type="button" class="btn" >Validate</button>
+        </div>
+      </form>
+    `;
+
+    document.getElementById('popup').innerHTML = formHTML;
+}
+
+document.getElementById('upload-btn').addEventListener("click", openFileUploadPopup)
 
 
 async function deleteWork(id) {   
@@ -184,7 +180,6 @@ async function deleteWork(id) {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + localStorage.getItem("token")
             },
-            body:null
         });
         console.log(response)
         if (response.ok) {
