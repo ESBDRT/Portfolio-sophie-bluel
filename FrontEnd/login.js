@@ -32,6 +32,7 @@ function sendDataToAPI(event) {
     })
 }
 
+// Restriction d'accés a la page login si déja connecté
 function restrictLoginPage(){
     const token = localStorage.getItem('token');
         if (token) {
@@ -41,3 +42,20 @@ function restrictLoginPage(){
 }
 
 restrictLoginPage()
+
+function isUserLoggedIn() {
+    const token = localStorage.getItem('token');
+    const loginButton = document.getElementById("login-btn");
+    const logoutButton = document.getElementById("logout-btn");
+
+    if (token !== null) {
+        loginButton.style.display = "none";
+        logoutButton.style.display = "block"; 
+        loggedInDisplay()
+    } else {
+        logoutButton.style.display = "none";
+        loginButton.style.display = "block";    
+    }
+}
+
+isUserLoggedIn()

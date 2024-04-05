@@ -47,11 +47,11 @@ renderFilters()
 // Création galerie
 async function renderGallery() {
     const works = await FetchWorks()
-        let html = "";
-            works.forEach(elt => {
-            html += '<figure data-category-id="' + elt.category.id + '" data-id="' + elt.id + '"><img src="'+elt.imageUrl+'" alt="'+elt.title+'"> <figcaption>'+elt.title+'</figcaption> </figure>';
-        });
-            document.getElementById('gallery').innerHTML = html;
+    let html = "";
+    works.forEach(elt => {
+        html += '<figure data-category-id="' + elt.category.id + '" data-id="' + elt.id + '"><img src="'+elt.imageUrl+'" alt="'+elt.title+'"> <figcaption>'+elt.title+'</figcaption> </figure>';
+    });
+    document.getElementById('gallery').innerHTML = html;
  }
 
 renderGallery()
@@ -59,11 +59,12 @@ renderGallery()
 // Clear local storage
 function clearStorage() {
     localStorage.removeItem('token'); 
-    isUserLoggedIn()
-    window.location.href ="login.html"
 };
 
-document.getElementById('logout-btn').addEventListener("click", clearStorage)
+document.getElementById('logout-btn').addEventListener("click", () => {
+    clearStorage()
+    window.location.href ="login.html"
+})
 
 // Fonction pour modifier l'affichage quand l'utilisateur est login
 function loggedInDisplay() {
@@ -109,33 +110,29 @@ async function openPopup() {
     popup.style.display = "flex"
 
     const works = await FetchWorks()
-        let html = "";
-            works.forEach(elt => {
-            html += '<figure data-id="' + elt.id + '"><span><i class="fa-solid fa-trash-can delete-logo" data-id="'+ elt.id +'" ></i><img src="'+elt.imageUrl+'" class="popup-images"></span></figure>';
-        });
-            document.getElementById('popup-gallery').innerHTML = html;
+    let html = "";
+        works.forEach(elt => {
+        html += '<figure data-id="' + elt.id + '"><span><i class="fa-solid fa-trash-can delete-logo" data-id="'+ elt.id +'" ></i><img src="'+elt.imageUrl+'" class="popup-images"></span></figure>';
+    });
+    document.getElementById('popup-gallery').innerHTML = html;
 
-            const deleteBtns = document.querySelectorAll('.fa-trash-can');           
-            deleteBtns.forEach(trash => {
-                trash.addEventListener('click', (e) => {
-                    var idToDelete = e.target.getAttribute('data-id')
-                // deleteWork(e.target.getAttribute('data-id'))
-               const toDelete = document.querySelectorAll('figure[data-id="'+idToDelete+'"]')
-               toDelete.forEach(e => {
+    const deleteBtns = document.querySelectorAll('.fa-trash-can');                          // On séléctionne tout les éléments avec cette classe     
+    deleteBtns.forEach(trash => {
+        trash.addEventListener('click', (e) => {                                                 // On ajoute les event listeners 
+            var idToDelete = e.target.getAttribute('data-id')                                    // On récupére le data-id de l'élément cliqué
+            deleteWork(e.target.getAttribute('data-id'))                                         // Réquéte API 
+            const toDelete = document.querySelectorAll('figure[data-id="'+idToDelete+'"]')       // On définit ce qui doit étre supprimé 
+            toDelete.forEach(e => {
                 e.remove()
-               })
-                })
-            })         
+            })
+        })
+    })         
 }
 
-document.getElementById('edit-banner').addEventListener("click", openPopup)
 document.getElementById('div-edit').addEventListener("click", openPopup)
 
-
-
-
 // Fermer popup
-function closePopup() {
+async function closePopup() {
     const overlay = document.getElementById('overlay');
     const popup = document.getElementById('popup')
 
@@ -143,34 +140,49 @@ function closePopup() {
     popup.style.display = "none"
 }
 
-function openFileUploadPopup() {
-    const popup = document.getElementById('popup')
-    const formHTML = `
-      <form id="myForm" class="upload-popup">
-      <h3 class="popup-title upload-title"> Ajout Photo </h3>
-        <div>
-          <input type="file" id="file class="btn" />
-        </div>
-        <div>
-            <p class="upload-title">Titre</p>
-          <input type="text" id="title" class="text-inputs"/>
-        </div>
-        <div>
-            <p class="upload-title" >Catégorie</p>
-          <input type="text" id="category" class="text-inputs" />
-        </div>
-        <div class="upload-div">
-          <button type="button" class="btn" >Validate</button>
-        </div>
-      </form>
-    `;
+function reversePopup() {
+    const form = document.getElementById('myForm')
+    const gallery = document.getElementById('popup-gallery')
+    const uploaddiv = document.getElementById('upload-div')
+    const popuptitle = document.getElementById('popup-title')
 
-    document.getElementById('popup').innerHTML = formHTML;
+    form.style.display ="none";
+    gallery.style.display ="flex";
+    uploaddiv.style.display ="flex"
+    popuptitle.style.display ="block"
 }
+
+async function openFileUploadPopup(){
+    const form = document.getElementById('myForm');
+    const gallery = document.getElementById('popup-gallery');
+    const uploaddiv = document.getElementById('upload-div');
+    const popuptitle = document.getElementById('popup-title');
+
+    form.style.display = "flex";
+    gallery.style.display = "none";
+    uploaddiv.style.display = "none";
+    popuptitle.style.display = "none";
+
+    const categories = await FetchCategories() 
+    let html = "";
+    categories.forEach(elt => {
+        html += '<option value="'+ elt.id +'">'+elt.name +'</option>'
+    })
+    document.getElementById('cats').innerHTML = html;
+}
+
+async function renderGallery() {
+    const works = await FetchWorks()
+    let html = "";
+    works.forEach(elt => {
+        html += '<figure data-category-id="' + elt.category.id + '" data-id="' + elt.id + '"><img src="'+elt.imageUrl+'" alt="'+elt.title+'"> <figcaption>'+elt.title+'</figcaption> </figure>';
+    });
+    document.getElementById('gallery').innerHTML = html;
+ }
 
 document.getElementById('upload-btn').addEventListener("click", openFileUploadPopup)
 
-
+// Requéte Fetch Delete
 async function deleteWork(id) {   
     try {
         const response = await fetch(`http://localhost:5678/api/works/${id}`, {
@@ -181,13 +193,70 @@ async function deleteWork(id) {
                 "Authorization": "Bearer " + localStorage.getItem("token")
             },
         });
-        console.log(response)
-        if (response.ok) {
-            console.log("Work deleted successfully");
-        } else {
+        if (!response.ok) { 
             console.error("Failed to delete work");
         }
     } catch (error) {
         console.error("An error occurred:", error);
     }
+}
+
+function previewFile() {
+    const preview = document.getElementById('button-upload-div');
+    const file = document.querySelector('input[type=file]').files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = function () {
+        const imagelogo = document.getElementById('image-logo')
+        const file = document.getElementById('file')
+        const filelabel = document.getElementById('file-label')
+        const filep = document.getElementById('file-p')
+
+        imagelogo.style.display ='none'
+        file.style.display = 'none'
+        filelabel.style.display = 'none'
+        filep.style.display = 'none'
+
+        preview.style.backgroundImage = `url(${reader.result})`;
+    }
+
+    if (file) {
+        reader.readAsDataURL(file);
+    } else {
+        preview.style.backgroundImage = null;
+    } 
+}
+
+function addWork() {   
+
+    var formData = new FormData();
+        
+        // Retrieve input values
+        var title = document.getElementById('title').value;
+        var cat = document.getElementById('cat').value;
+        
+        // Add fields to the FormData object
+        formData.append('title', title);
+        formData.append('category', cat);
+        
+        // Add files to the FormData object
+        var fileInput = document.getElementById('file'); 
+        var file = fileInput.files[0];
+        formData.append('image', file);
+
+        var headers = new Headers();
+        headers.append("Authorization", "Bearer " + localStorage.getItem('token'));
+
+    try {
+            fetch(`http://localhost:5678/api/works`, {
+            method: "POST",
+            body: formData,
+            headers: headers               
+        });
+    } catch (error) {
+        console.error("An error occurred:", error);
+    }
+    renderGallery()
+    reversePopup()
+    openPopup()
 }

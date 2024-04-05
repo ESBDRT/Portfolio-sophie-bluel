@@ -14,13 +14,39 @@
 <div class="overlay" id="overlay"></div>
 <div class="popup" id="popup">
 	<div>
-		<h3 class="popup-title"> Galerie Photo <i class="fa-solid fa-xmark close-popup" onclick="closePopup()"></i></h3>
+		<h3 class="popup-title" id="popup-title"> Galerie Photo <i class="fa-solid fa-xmark close-popup" onclick="closePopup()"></i></h3>
 	</div>
 	<div class="popup-gallery" id="popup-gallery">
 	</div>
-	<div class="upload-div">
+	<div class="upload-div" id="upload-div">
 		<button class="btn upload-btn" id="upload-btn">Ajouter une photo</button>
 	</div>
+	<form id="myForm" class="upload-popup">
+        <div class ="upload-title-div">
+            <i class="fa-solid fa-arrow-left arrow" id="arrow" onclick="reversePopup()"></i>
+            <h3 class="add-title"> Ajout Photo </h3>
+            <i class="fa-solid fa-xmark cross" onclick="closePopup()"></i>
+        </div>
+        <div class="button-upload-div" id="button-upload-div">
+            <i class="fa-regular fa-image image-logo" id="image-logo"></i>
+            <input type="file" id="file" accept="image/*" onchange="previewFile()">
+            <label for="file" class="upload-label" id="file-label">+ Ajouter photo</label>
+            <p class="file-size-p" id="file-p">jpg. png : 4mo max</p>
+        </div>
+        <div>
+          <p class="upload-title">Titre</p>
+          <input type="text" id="title" class="text-inputs"/>
+        </div>
+        <div>
+            <p class="upload-title" >Catégorie</p>
+            <input list="cats" id="cat" name="myBrowser" class="text-inputs" /></label>
+            <datalist id="cats">
+            </datalist>
+        </div>
+        <div class="upload-div" id="upload-div">
+          <button type="button" id="add-work-btn" class="btn" onclick="addWork()">Validate</button>
+        </div>
+      </form>
 </div>
 <div class="edit-banner" id="edit-banner">
 	<i class="far fa-edit logo"></i>Mode édition
