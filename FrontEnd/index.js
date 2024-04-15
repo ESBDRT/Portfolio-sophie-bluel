@@ -12,6 +12,25 @@ async function FetchWorks() {
     })
 }
 
+// Requéte Fetch Delete
+async function deleteWork(id) {   
+    try {
+        const response = await fetch(`http://localhost:5678/api/works/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            },
+        });
+        if (!response.ok) { 
+            console.error("Failed to delete work");
+        }
+    } catch (error) {
+        console.error("An error occurred:", error);
+    }
+}
+
 // Filtrage 
 function filtering(categoryId) {
     const figures = document.querySelectorAll('#gallery figure');
@@ -82,7 +101,7 @@ function loggedInDisplay() {
     }
 }
 
-// Fonction pour check si un token est présent est affiché les boutons login / logout
+// Fonction pour check si un token est présent et affiché les boutons login / logout
 function isUserLoggedIn() {
     const token = localStorage.getItem('token');
     const loginButton = document.getElementById("login-btn");
@@ -166,7 +185,7 @@ async function openFileUploadPopup(){
     const categories = await FetchCategories() 
     let html = "";
     categories.forEach(elt => {
-        html += '<option value="'+ elt.id +'">'+elt.name +'</option>'
+        html += '<option value="'+ elt.name +'"></option>'
     })
     document.getElementById('cats').innerHTML = html;
 }
@@ -181,25 +200,6 @@ async function renderGallery() {
  }
 
 document.getElementById('upload-btn').addEventListener("click", openFileUploadPopup)
-
-// Requéte Fetch Delete
-async function deleteWork(id) {   
-    try {
-        const response = await fetch(`http://localhost:5678/api/works/${id}`, {
-            method: "DELETE",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + localStorage.getItem("token")
-            },
-        });
-        if (!response.ok) { 
-            console.error("Failed to delete work");
-        }
-    } catch (error) {
-        console.error("An error occurred:", error);
-    }
-}
 
 function previewFile() {
     const preview = document.getElementById('button-upload-div');
