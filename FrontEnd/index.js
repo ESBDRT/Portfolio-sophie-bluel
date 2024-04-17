@@ -185,7 +185,7 @@ async function openFileUploadPopup(){
     const categories = await FetchCategories() 
     let html = "";
     categories.forEach(elt => {
-        html += '<option value="'+ elt.name +'"></option>'
+        html += '<option value="'+ elt.id +'">"'+ elt.name +'"</option>'
     })
     document.getElementById('cats').innerHTML = html;
 }
@@ -233,7 +233,7 @@ function addWork() {
         
         // Retrieve input values
         var title = document.getElementById('title').value;
-        var cat = document.getElementById('cat').value;
+        var cat = document.getElementById('cats').value;
         
         // Add fields to the FormData object
         formData.append('title', title);
