@@ -26,7 +26,6 @@ function sendDataToAPI(event) {
             throw new Error('Erreur dans l’identifiant ou le mot de passe');
     })
     .then(data => {
-        console.log(data);
         var token = data.token;
         localStorage.setItem('token', token);
     })

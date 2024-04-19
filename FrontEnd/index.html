@@ -29,21 +29,21 @@
         </div>
         <div class="button-upload-div" id="button-upload-div">
             <i class="fa-regular fa-image image-logo" id="image-logo"></i>
-            <input type="file" id="file" accept="image/*" onchange="previewFile()">
+            <input type="file" id="file" accept="image/*" onchange="previewFile()" required>
             <label for="file" class="upload-label" id="file-label">+ Ajouter photo</label>
             <p class="file-size-p" id="file-p">jpg. png : 4mo max</p>
         </div>
         <div>
           <p class="upload-title">Titre</p>
-          <input type="text" id="title" class="text-inputs"/>
+          <input type="text" id="title" class="text-inputs" required/>
         </div>
         <div>
             <p class="upload-title" >Catégorie</p>
-            <select id="cats" class="text-inputs">
+            <select id="cats" class="text-inputs" required>
             </select>
         </div>
         <div class="upload-div" id="upload-div">
-          <button type="button" id="add-work-btn" class="btn" onclick="addWork()">Validate</button>
+          <button type="submit" id="add-work-btn" class="btn" onclick="addWork()">Validate</button>
         </div>
       </form>
 </div>

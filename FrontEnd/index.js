@@ -227,10 +227,19 @@ function previewFile() {
     } 
 }
 
-function addWork() {   
+function addWork(event) {   
 
-    var formData = new FormData();
+        event.preventDefault(); // Prevent default form submission
         
+        var form = document.getElementById('myForm');
+        
+        if (!form.checkValidity()) {
+            // Form is invalid, handle the case (e.g., display error messages)
+            return;
+        }
+
+        var formData = new FormData();
+
         // Retrieve input values
         var title = document.getElementById('title').value;
         var cat = document.getElementById('cats').value;
