@@ -483,3 +483,10 @@ input[type="file"] {
 .upload-popup {
 	display: none;
 }
+
+.log-error {
+	padding-bottom: 25px;
+	text-align: center;
+	color: red;
+	display: none;
+}	

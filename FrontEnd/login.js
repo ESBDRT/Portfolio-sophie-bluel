@@ -4,11 +4,12 @@ function sendDataToAPI(event) {
 
     var email = document.getElementById("emailInput").value;
     var password = document.getElementById("passwordInput").value;
-
     var formData = {
         email: email,
         password: password
     };
+
+    const logerror = document.getElementById("log-error");
 
     fetch('http://localhost:5678/api/users/login', {
         method: 'POST',
@@ -23,13 +24,15 @@ function sendDataToAPI(event) {
             return response.json();
         }
         else 
-            throw new Error('Erreur dans l’identifiant ou le mot de passe');
+             logerror.style.display = "block"
     })
     .then(data => {
         var token = data.token;
         localStorage.setItem('token', token);
     })
 }
+
+document.getElementById("login-form").addEventListener("submit", sendDataToAPI)
 
 // Restriction d'accés a la page login si déja connecté
 function restrictLoginPage(){

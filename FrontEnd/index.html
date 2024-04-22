@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 	<meta charset="UTF-8">
-	<title>Sophie Bluel - Architecte d'intérieur</title>
+	<title>Sophie Bluel - Architecte d'intérieur </title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,7 +14,7 @@
 <div class="overlay" id="overlay"></div>
 <div class="popup" id="popup">
 	<div>
-		<h3 class="popup-title" id="popup-title"> Galerie Photo <i class="fa-solid fa-xmark close-popup" onclick="closePopup()"></i></h3>
+		<h3 class="popup-title" id="popup-title"> Galerie Photo <i class="fa-solid fa-xmark close-popup" id="cross"></i></h3>
 	</div>
 	<div class="popup-gallery" id="popup-gallery">
 	</div>
@@ -23,13 +23,13 @@
 	</div>
 	<form id="myForm" class="upload-popup">
         <div class ="upload-title-div">
-            <i class="fa-solid fa-arrow-left arrow" id="arrow" onclick="reversePopup()"></i>
-            <h3 class="add-title"> Ajout Photo </h3>
-            <i class="fa-solid fa-xmark cross" onclick="closePopup()"></i>
+            <i class="fa-solid fa-arrow-left arrow" id="arrow"></i>
+            <h3 class="add-title">Ajout Photo</h3>
+            <i class="fa-solid fa-xmark cross" id="cross"></i>
         </div>
         <div class="button-upload-div" id="button-upload-div">
             <i class="fa-regular fa-image image-logo" id="image-logo"></i>
-            <input type="file" id="file" accept="image/*" onchange="previewFile()" required>
+            <input type="file" id="file" accept="image/*" required>
             <label for="file" class="upload-label" id="file-label">+ Ajouter photo</label>
             <p class="file-size-p" id="file-p">jpg. png : 4mo max</p>
         </div>
@@ -43,7 +43,7 @@
             </select>
         </div>
         <div class="upload-div" id="upload-div">
-          <button type="submit" id="add-work-btn" class="btn" onclick="addWork()">Validate</button>
+          <button type="submit" id="add-work-btn" class="btn">Validate</button>
         </div>
       </form>
 </div>

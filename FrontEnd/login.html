@@ -17,7 +17,7 @@
 			<li>projects</li>
 			<li>contact</li>
 			<a href="login.html"><li id="login-btn">login</li></a>
-			<li id="logout-btn" class="logout-btn" onclick="clearStorage()">logout</li>
+			<li id="logout-btn" class="logout-btn">logout</li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -25,10 +25,10 @@
 <body>
 	<div class="login">
 		<h2 class="title">Log in</h2>
-		<form class="login-form" method="post" onsubmit="sendDataToAPI(event)">
+		<form class="login-form" method="post" id="login-form">
 			<span>E-mail</span><input id="emailInput" class="inputs" type="email" name="email" required>
 			<span>Mot de passe</span><input id="passwordInput" class="inputs" type="password" name="password" required>
-			<p class="log-error">Les identitifiants n'éxistent pas ou sont érronés</p>
+			<p class="log-error" id="log-error">Erreur dans l’identifiant ou le mot de passe </p>
 			<button class="log-btn" type="submit" value="Se connecter">Se connecter</button>
 			<p class="pass-reset">Mot de passe oublié</p>
 		</form>
@@ -43,4 +43,3 @@
 </body>
 <script src="login.js"></script>
 </html>
-

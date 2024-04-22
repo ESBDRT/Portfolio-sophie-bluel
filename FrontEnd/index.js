@@ -119,7 +119,6 @@ function isUserLoggedIn() {
 
 isUserLoggedIn()
 
-
 // Ouvrir popup
 async function openPopup() {
     const overlay = document.getElementById('overlay');
@@ -159,6 +158,8 @@ async function closePopup() {
     popup.style.display = "none"
 }
 
+document.getElementById("cross").addEventListener("click", closePopup)
+
 function reversePopup() {
     const form = document.getElementById('myForm')
     const gallery = document.getElementById('popup-gallery')
@@ -170,6 +171,8 @@ function reversePopup() {
     uploaddiv.style.display ="flex"
     popuptitle.style.display ="block"
 }
+
+document.getElementById("arrow").addEventListener("click", reversePopup)
 
 async function openFileUploadPopup(){
     const form = document.getElementById('myForm');
@@ -227,8 +230,9 @@ function previewFile() {
     } 
 }
 
-function addWork(event) {   
+document.getElementById("file").addEventListener("change", previewFile)
 
+function addWork(event) {   
         event.preventDefault(); // Prevent default form submission
         
         var form = document.getElementById('myForm');
@@ -267,5 +271,6 @@ function addWork(event) {
     }
     renderGallery()
     reversePopup()
-    openPopup()
 }
+
+document.getElementById("add-work-btn").addEventListener("click", addWork)
