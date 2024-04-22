@@ -233,44 +233,51 @@ function previewFile() {
 document.getElementById("file").addEventListener("change", previewFile)
 
 function addWork(event) {   
-        event.preventDefault(); // Prevent default form submission
-        
-        var form = document.getElementById('myForm');
-        
-        if (!form.checkValidity()) {
-            // Form is invalid, handle the case (e.g., display error messages)
-            return;
-        }
+    event.preventDefault(); // Prevent default form submission
+    
+    var form = document.getElementById('myForm');
+    
+    if (!form.checkValidity()) {
+        // Form is invalid, handle the case (e.g., display error messages)
+        return;
+    }
 
-        var formData = new FormData();
+    var formData = new FormData();
 
-        // Retrieve input values
-        var title = document.getElementById('title').value;
-        var cat = document.getElementById('cats').value;
-        
-        // Add fields to the FormData object
-        formData.append('title', title);
-        formData.append('category', cat);
-        
-        // Add files to the FormData object
-        var fileInput = document.getElementById('file'); 
-        var file = fileInput.files[0];
-        formData.append('image', file);
+    // Retrieve input values
+    var title = document.getElementById('title').value;
+    var cat = document.getElementById('cats').value;
+    
+    // Add fields to the FormData object
+    formData.append('title', title);
+    formData.append('category', cat);
+    
+    // Add files to the FormData object
+    var fileInput = document.getElementById('file'); 
+    var file = fileInput.files[0];
+    formData.append('image', file);
 
-        var headers = new Headers();
-        headers.append("Authorization", "Bearer " + localStorage.getItem('token'));
+    var headers = new Headers();
+    headers.append("Authorization", "Bearer " + localStorage.getItem('token'));
 
     try {
-            fetch(`http://localhost:5678/api/works`, {
+        fetch(`http://localhost:5678/api/works`, {
             method: "POST",
             body: formData,
             headers: headers               
-        });
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            renderGallery();
+            closePopup();
+            reversePopup();
+            openPopup();
+        })
     } catch (error) {
         console.error("An error occurred:", error);
     }
-    renderGallery()
-    reversePopup()
 }
 
 document.getElementById("add-work-btn").addEventListener("click", addWork)
